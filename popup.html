@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+      width: 300px;
+      padding: 16px;
+      margin: 0;
+      font-size: 13px;
+      color: #24292f;
+    }
+
+    h2 {
+      font-size: 15px;
+      font-weight: 600;
+      margin: 0 0 12px 0;
+    }
+
+    .status-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      border-bottom: 1px solid #d8dee4;
+    }
+
+    .status-row:last-child {
+      border-bottom: none;
+    }
+
+    .status-label {
+      color: #57606a;
+    }
+
+    .status-value {
+      font-weight: 600;
+      text-align: right;
+      max-width: 160px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .correct { color: #1a7f37; }
+    .mismatch { color: #cf222e; }
+    .none { color: #57606a; font-style: italic; font-weight: 400; }
+
+    .message {
+      text-align: center;
+      padding: 16px 0;
+      color: #57606a;
+      font-size: 13px;
+    }
+
+    .footer {
+      margin-top: 12px;
+      padding-top: 8px;
+      border-top: 1px solid #d8dee4;
+      text-align: center;
+    }
+
+    .btn-link {
+      background: none;
+      border: none;
+      color: #0969da;
+      cursor: pointer;
+      font-size: 13px;
+      text-decoration: none;
+      padding: 4px 8px;
+    }
+
+    .btn-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <h2>GitHub Account Switcher</h2>
+
+  <div id="status-container" style="display: none;">
+    <div class="status-row">
+      <span class="status-label">Current user</span>
+      <span class="status-value" id="current-user"></span>
+    </div>
+    <div class="status-row">
+      <span class="status-label">Matched pattern</span>
+      <span class="status-value" id="matched-pattern"></span>
+    </div>
+    <div class="status-row">
+      <span class="status-label">Expected user</span>
+      <span class="status-value" id="expected-user"></span>
+    </div>
+    <div class="status-row">
+      <span class="status-label">Status</span>
+      <span class="status-value" id="status-indicator"></span>
+    </div>
+  </div>
+
+  <div id="message" class="message" style="display: none;"></div>
+
+  <div class="footer">
+    <button id="settings-btn" class="btn-link">Settings</button>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

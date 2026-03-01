@@ -1,0 +1,26 @@
+{
+  "manifest_version": 3,
+  "name": "GitHub Account Switcher",
+  "version": "1.0.0",
+  "description": "Automatically switch GitHub accounts based on URL patterns",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "notifications"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://github.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "GitHub Account Switcher"
+  },
+  "options_page": "options.html"
+}
