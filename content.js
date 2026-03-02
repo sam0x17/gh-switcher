@@ -75,8 +75,13 @@ async function switchToAccount(targetUsername) {
 
   avatarButton.click();
 
-  // Step 2: Wait for the avatar dialog to open
-  const dialog = await waitForElement('[role="dialog"][data-component="AnchoredOverlay"]', 3000);
+  // Step 2: Wait for the avatar dialog to open (retry click if needed)
+  let dialog = await waitForElement('[role="dialog"][data-component="AnchoredOverlay"]', 2000);
+  if (!dialog) {
+    // Page may not have been interactive yet — retry the click
+    avatarButton.click();
+    dialog = await waitForElement('[role="dialog"][data-component="AnchoredOverlay"]', 3000);
+  }
   if (!dialog) {
     console.warn('[gh-switcher] Avatar dialog did not open');
     return { success: false, reason: 'menu-not-found' };
@@ -269,6 +274,11 @@ main();
 
 // Re-run on GitHub's SPA navigation (Turbo Drive)
 document.addEventListener('turbo:load', main);
+
+// Re-run when the tab becomes visible (e.g. user switches tabs)
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible') main();
+});
 
 // ── Message Handler (for popup status queries) ──────────────────────────────
 
