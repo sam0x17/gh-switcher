@@ -176,6 +176,38 @@ function closeMenu() {
 
 // ── Main Logic ──────────────────────────────────────────────────────────────
 
+// Paths where account switching should never trigger (account-level pages)
+const IGNORED_PATHS = [
+  '/settings',
+  '/login',
+  '/logout',
+  '/sessions',
+  '/password_reset',
+  '/join',
+  '/signup',
+  '/account',
+  '/sponsors',
+  '/notifications',
+  '/new',
+  '/codespaces',
+  '/explore',
+  '/trending',
+  '/collections',
+  '/events',
+  '/stars',
+  '/marketplace',
+  '/pricing',
+  '/features',
+  '/security',
+  '/dashboard',
+];
+
+function isIgnoredPath(url) {
+  const path = new URL(url).pathname;
+  if (path === '/' || path === '') return true;
+  return IGNORED_PATHS.some((p) => path === p || path.startsWith(p + '/'));
+}
+
 const COOLDOWN_KEY = 'gh-switcher-last-switch';
 const COOLDOWN_MS = 5000;
 
@@ -184,6 +216,7 @@ async function main() {
   if (!currentUser) return; // Not logged in
 
   const currentUrl = window.location.href;
+  if (isIgnoredPath(currentUrl)) return;
 
   // Prevent switch loops
   const lastSwitch = sessionStorage.getItem(COOLDOWN_KEY);
